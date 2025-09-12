@@ -1,0 +1,496 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 21,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "default",
+      "displayName": "Default Config",
+      "description": "Default build using Ninja generator",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "toolchainFile": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "BUILD_SHARED_LIBS": false,
+        "CPPLIB_BUILD_EXAMPLES": true,
+        "CPPLIB_BUILD_TESTS": false,
+        "CMAKE_EXPORT_COMPILE_COMMANDS": true
+      },
+      "environment": {
+        "VCPKG_TARGET_TRIPLET": "x64-windows",
+        "VCPKG_HOST_TRIPLET": "x64-windows"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    },
+    {
+      "name": "default-linux",
+      "displayName": "Default Config (Linux)",
+      "description": "Default build using Ninja generator for Linux",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "toolchainFile": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "BUILD_SHARED_LIBS": false,
+        "CPPLIB_BUILD_EXAMPLES": true,
+        "CPPLIB_BUILD_TESTS": false,
+        "CMAKE_EXPORT_COMPILE_COMMANDS": true
+      },
+      "environment": {
+        "VCPKG_TARGET_TRIPLET": "x64-linux",
+        "VCPKG_HOST_TRIPLET": "x64-linux"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      }
+    },
+    {
+      "name": "default-macos",
+      "displayName": "Default Config (macOS)",
+      "description": "Default build using Ninja generator for macOS",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "toolchainFile": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "BUILD_SHARED_LIBS": false,
+        "CPPLIB_BUILD_EXAMPLES": true,
+        "CPPLIB_BUILD_TESTS": false,
+        "CMAKE_EXPORT_COMPILE_COMMANDS": true
+      },
+      "environment": {
+        "VCPKG_TARGET_TRIPLET": "x64-osx",
+        "VCPKG_HOST_TRIPLET": "x64-osx"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Darwin"
+      }
+    },
+    {
+      "name": "debug",
+      "displayName": "Debug Build",
+      "description": "Debug build with static library",
+      "inherits": "default",
+      "binaryDir": "${sourceDir}/build/debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "BUILD_SHARED_LIBS": false,
+        "CPPLIB_BUILD_TESTS": true
+      }
+    },
+    {
+      "name": "release",
+      "displayName": "Release Build",
+      "description": "Release build with static library",
+      "inherits": "default",
+      "binaryDir": "${sourceDir}/build/release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "BUILD_SHARED_LIBS": false
+      }
+    },
+    {
+      "name": "shared-debug",
+      "displayName": "Shared Debug Build",
+      "description": "Debug build with shared library",
+      "inherits": "default",
+      "binaryDir": "${sourceDir}/build/shared-debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "BUILD_SHARED_LIBS": true,
+        "CPPLIB_BUILD_TESTS": true
+      }
+    },
+    {
+      "name": "shared-release",
+      "displayName": "Shared Release Build",
+      "description": "Release build with shared library",
+      "inherits": "default",
+      "binaryDir": "${sourceDir}/build/shared-release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "BUILD_SHARED_LIBS": true
+      }
+    },
+    {
+      "name": "vs2022",
+      "displayName": "Visual Studio 2022",
+      "description": "Visual Studio 2022 generator",
+      "generator": "Visual Studio 17 2022",
+      "architecture": "x64",
+      "binaryDir": "${sourceDir}/build/vs2022",
+      "toolchainFile": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+      "cacheVariables": {
+        "BUILD_SHARED_LIBS": false,
+        "CPPLIB_BUILD_EXAMPLES": true,
+        "CPPLIB_BUILD_TESTS": false,
+        "CMAKE_EXPORT_COMPILE_COMMANDS": true
+      },
+      "environment": {
+        "VCPKG_TARGET_TRIPLET": "x64-windows",
+        "VCPKG_HOST_TRIPLET": "x64-windows"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    },
+    {
+      "name": "vs2022-shared",
+      "displayName": "Visual Studio 2022 (Shared)",
+      "description": "Visual Studio 2022 generator with shared library",
+      "inherits": "vs2022",
+      "binaryDir": "${sourceDir}/build/vs2022-shared",
+      "cacheVariables": {
+        "BUILD_SHARED_LIBS": true
+      }
+    },
+    {
+      "name": "mingw",
+      "displayName": "MinGW Build",
+      "description": "MinGW compiler with Ninja generator",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/mingw",
+      "toolchainFile": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "BUILD_SHARED_LIBS": false,
+        "CPPLIB_BUILD_EXAMPLES": true,
+        "CPPLIB_BUILD_TESTS": false,
+        "CMAKE_C_COMPILER": "gcc",
+        "CMAKE_CXX_COMPILER": "g++",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": true
+      },
+      "environment": {
+        "VCPKG_TARGET_TRIPLET": "x64-mingw-static",
+        "VCPKG_HOST_TRIPLET": "x64-mingw-static"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    },
+    {
+      "name": "clang",
+      "displayName": "Clang Build",
+      "description": "Clang compiler with Ninja generator",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/clang",
+      "toolchainFile": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "BUILD_SHARED_LIBS": false,
+        "CPPLIB_BUILD_EXAMPLES": true,
+        "CPPLIB_BUILD_TESTS": false,
+        "CMAKE_C_COMPILER": "clang",
+        "CMAKE_CXX_COMPILER": "clang++",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": true
+      },
+      "environment": {
+        "VCPKG_TARGET_TRIPLET": "x64-linux",
+        "VCPKG_HOST_TRIPLET": "x64-linux"
+      },
+      "condition": {
+        "type": "inList",
+        "string": "${hostSystemName}",
+        "list": [
+          "Linux",
+          "Darwin"
+        ]
+      }
+    },
+    {
+      "name": "sanitizers",
+      "displayName": "Sanitizers Build",
+      "description": "Debug build with AddressSanitizer and UndefinedBehaviorSanitizer",
+      "inherits": "debug",
+      "binaryDir": "${sourceDir}/build/sanitizers",
+      "cacheVariables": {
+        "CMAKE_CXX_FLAGS": "-fsanitize=address,undefined -fno-omit-frame-pointer -g",
+        "CMAKE_C_FLAGS": "-fsanitize=address,undefined -fno-omit-frame-pointer -g",
+        "CMAKE_EXE_LINKER_FLAGS": "-fsanitize=address,undefined",
+        "CMAKE_SHARED_LINKER_FLAGS": "-fsanitize=address,undefined"
+      },
+      "condition": {
+        "type": "inList",
+        "string": "${hostSystemName}",
+        "list": [
+          "Linux",
+          "Darwin"
+        ]
+      }
+    },
+    {
+      "name": "coverage",
+      "displayName": "Coverage Build",
+      "description": "Debug build with code coverage",
+      "inherits": "debug",
+      "binaryDir": "${sourceDir}/build/coverage",
+      "cacheVariables": {
+        "CMAKE_CXX_FLAGS": "-fprofile-arcs -ftest-coverage -g -O0",
+        "CMAKE_C_FLAGS": "-fprofile-arcs -ftest-coverage -g -O0",
+        "CMAKE_EXE_LINKER_FLAGS": "--coverage",
+        "CMAKE_SHARED_LINKER_FLAGS": "--coverage",
+        "CPPLIB_BUILD_TESTS": true
+      },
+      "condition": {
+        "type": "inList",
+        "string": "${hostSystemName}",
+        "list": [
+          "Linux",
+          "Darwin"
+        ]
+      }
+    },
+    {
+      "name": "arm64",
+      "displayName": "ARM64 Cross-compile",
+      "description": "ARM64 cross-compilation for Linux",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/arm64",
+      "toolchainFile": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "BUILD_SHARED_LIBS": false,
+        "CPPLIB_BUILD_EXAMPLES": true,
+        "CPPLIB_BUILD_TESTS": false,
+        "CMAKE_EXPORT_COMPILE_COMMANDS": true
+      },
+      "environment": {
+        "VCPKG_TARGET_TRIPLET": "arm64-linux",
+        "VCPKG_HOST_TRIPLET": "x64-linux"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "default",
+      "displayName": "Default Build",
+      "configurePreset": "default",
+      "description": "Default build using the default configure preset"
+    },
+    {
+      "name": "debug",
+      "displayName": "Debug Build",
+      "configurePreset": "debug",
+      "description": "Debug build"
+    },
+    {
+      "name": "release",
+      "displayName": "Release Build",
+      "configurePreset": "release",
+      "description": "Release build"
+    },
+    {
+      "name": "shared-debug",
+      "displayName": "Shared Debug Build",
+      "configurePreset": "shared-debug",
+      "description": "Shared library debug build"
+    },
+    {
+      "name": "shared-release",
+      "displayName": "Shared Release Build",
+      "configurePreset": "shared-release",
+      "description": "Shared library release build"
+    },
+    {
+      "name": "vs2022-debug",
+      "displayName": "VS2022 Debug",
+      "configurePreset": "vs2022",
+      "configuration": "Debug",
+      "description": "Visual Studio 2022 debug build"
+    },
+    {
+      "name": "vs2022-release",
+      "displayName": "VS2022 Release",
+      "configurePreset": "vs2022",
+      "configuration": "Release",
+      "description": "Visual Studio 2022 release build"
+    },
+    {
+      "name": "vs2022-shared-debug",
+      "displayName": "VS2022 Shared Debug",
+      "configurePreset": "vs2022-shared",
+      "configuration": "Debug",
+      "description": "Visual Studio 2022 shared library debug build"
+    },
+    {
+      "name": "vs2022-shared-release",
+      "displayName": "VS2022 Shared Release",
+      "configurePreset": "vs2022-shared",
+      "configuration": "Release",
+      "description": "Visual Studio 2022 shared library release build"
+    },
+    {
+      "name": "mingw",
+      "displayName": "MinGW Build",
+      "configurePreset": "mingw",
+      "description": "MinGW build"
+    },
+    {
+      "name": "clang",
+      "displayName": "Clang Build",
+      "configurePreset": "clang",
+      "description": "Clang build"
+    },
+    {
+      "name": "sanitizers",
+      "displayName": "Sanitizers Build",
+      "configurePreset": "sanitizers",
+      "description": "Build with sanitizers enabled"
+    },
+    {
+      "name": "coverage",
+      "displayName": "Coverage Build",
+      "configurePreset": "coverage",
+      "description": "Build with code coverage enabled"
+    },
+    {
+      "name": "arm64",
+      "displayName": "ARM64 Build",
+      "configurePreset": "arm64",
+      "description": "ARM64 cross-compile build"
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "default",
+      "displayName": "Default Tests",
+      "configurePreset": "debug",
+      "description": "Run all tests with default settings",
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "noTestsAction": "error",
+        "stopOnFailure": false
+      }
+    },
+    {
+      "name": "coverage",
+      "displayName": "Coverage Tests",
+      "configurePreset": "coverage",
+      "description": "Run tests with coverage collection",
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "noTestsAction": "error",
+        "stopOnFailure": false
+      }
+    },
+    {
+      "name": "sanitizers",
+      "displayName": "Sanitizer Tests",
+      "configurePreset": "sanitizers",
+      "description": "Run tests with sanitizers enabled",
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "noTestsAction": "error",
+        "stopOnFailure": false
+      }
+    }
+  ],
+  "packagePresets": [
+    {
+      "name": "default",
+      "displayName": "Default Package",
+      "configurePreset": "release",
+      "description": "Create release package",
+      "generators": [
+        "ZIP"
+      ]
+    },
+    {
+      "name": "windows-installer",
+      "displayName": "Windows Installer",
+      "configurePreset": "vs2022",
+      "description": "Create Windows installer package",
+      "generators": [
+        "NSIS",
+        "ZIP"
+      ],
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    },
+    {
+      "name": "linux-package",
+      "displayName": "Linux Package",
+      "configurePreset": "release",
+      "description": "Create Linux package",
+      "generators": [
+        "DEB",
+        "TGZ"
+      ],
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      }
+    }
+  ],
+  "workflowPresets": [
+    {
+      "name": "full-build",
+      "displayName": "Full Build Workflow",
+      "description": "Configure, build, and test",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "debug"
+        },
+        {
+          "type": "build",
+          "name": "debug"
+        },
+        {
+          "type": "test",
+          "name": "default"
+        }
+      ]
+    },
+    {
+      "name": "release-workflow",
+      "displayName": "Release Workflow",
+      "description": "Configure, build, test, and package release",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "release"
+        },
+        {
+          "type": "build",
+          "name": "release"
+        },
+        {
+          "type": "package",
+          "name": "default"
+        }
+      ]
+    }
+  ]
+}

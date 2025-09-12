@@ -1,0 +1,33 @@
+{
+  "name": "cpplib",
+  "version": "1.0.0",
+  "description": "Demo C++ library showcasing static/dynamic library development with vcpkg and CMake",
+  "homepage": "https://github.com/example/cpplib",
+  "license": "MIT",
+  "dependencies": [
+    {
+      "name": "fmt",
+      "version>=": "9.0.0"
+    },
+    {
+      "name": "vcpkg-cmake",
+      "host": true
+    },
+    {
+      "name": "vcpkg-cmake-config",
+      "host": true
+    }
+  ],
+  "features": {
+    "tests": {
+      "description": "Build tests",
+      "dependencies": [
+        "gtest"
+      ]
+    },
+    "tools": {
+      "description": "Build example tools",
+      "dependencies": []
+    }
+  }
+}

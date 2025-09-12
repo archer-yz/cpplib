@@ -1,0 +1,26 @@
+cpplib provides CMake targets:
+
+```cmake
+find_package(cpplib CONFIG REQUIRED)
+target_link_libraries(main PRIVATE cpplib::cpplib)
+```
+
+The package provides a C++ utility library with:
+
+- String formatting and logging using fmt
+- Mathematical utility functions
+- Cross-platform static/dynamic library support
+
+Example usage:
+
+```cpp
+#include <cpplib/cpplib.h>
+
+int main() {
+    cpplib::StringFormatter formatter;
+    formatter.log("INFO", "Hello, {}!", "World");
+
+    auto fib = cpplib::MathUtils::fibonacci(10);
+    return 0;
+}
+```

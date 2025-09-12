@@ -1,0 +1,148 @@
+# Build directories
+build/
+build-*/
+out/
+cmake-build-*/
+
+# vcpkg
+vcpkg_installed/
+.vcpkg-root
+
+# Visual Studio
+.vs/
+*.user
+*.vcxproj.filters
+*.vcxproj.user
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+CMakeScripts/
+Testing/
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps
+
+# Build directories
+build/
+Build/
+BUILD/
+out/
+x64/
+x86/
+Debug/
+Release/
+RelWithDebInfo/
+MinSizeRel/
+
+# Visual Studio
+*.vcxproj.user
+*.vcxproj.filters
+*.sln.docstates
+*.suo
+*.sdf
+*.opensdf
+*.db
+*.ipch
+.vs/
+*.VC.VC.opendb
+*.VC.db
+
+# CLion
+.idea/
+cmake-build-*/
+
+# Code::Blocks
+*.depend
+*.layout
+*.cbp
+
+# Qt
+*.pro.user
+*.pro.user.*
+moc_*.cpp
+moc_*.h
+qrc_*.cpp
+ui_*.h
+*.qm
+.qmake.cache
+.qmake.stash
+
+# Conan
+conandata.yml
+conanfile.txt
+conaninfo.txt
+
+# vcpkg
+vcpkg_installed/
+
+# Package managers
+.conan/
+packages/
+
+# OS specific
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# Log files
+*.log
+
+# Archives
+*.zip
+*.tar.gz
+*.rar
+
+# Backup files
+*.bak
+*.backup

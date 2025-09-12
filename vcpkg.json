@@ -1,0 +1,17 @@
+{
+  "name": "cpplib",
+  "version": "1.0.0",
+  "description": "Demo C++ library showcasing static/dynamic library development with vcpkg and CMake",
+  "homepage": "https://github.com/example/cpplib",
+  "dependencies": [
+    "fmt"
+  ],
+  "features": {
+    "tests": {
+      "description": "Build tests",
+      "dependencies": [
+        "gtest"
+      ]
+    }
+  }
+}

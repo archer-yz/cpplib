@@ -1,0 +1,7 @@
+{
+  "name": "test-consumer",
+  "version": "1.0.0",
+  "dependencies": [
+    "fmt"
+  ]
+}
