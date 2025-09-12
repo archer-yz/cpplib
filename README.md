@@ -308,6 +308,7 @@ cmake --install build
 This project includes two different types of examples:
 
 1. **`client/`** - Built-in Demo Application
+
    - Part of the main project build
    - Demonstrates library features during development
    - Built automatically when `CPPLIB_BUILD_EXAMPLES=ON`
