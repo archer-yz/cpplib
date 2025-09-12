@@ -4,6 +4,12 @@ build-*/
 out/
 cmake-build-*/
 
+# Installation directories
+dist/
+dist-*/
+install/
+install-*/
+
 # vcpkg
 vcpkg_installed/
 .vcpkg-root
