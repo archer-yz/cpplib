@@ -136,7 +136,8 @@
         "BUILD_SHARED_LIBS": false,
         "CPPLIB_BUILD_EXAMPLES": true,
         "CPPLIB_BUILD_TESTS": false,
-        "CMAKE_EXPORT_COMPILE_COMMANDS": true
+        "CMAKE_EXPORT_COMPILE_COMMANDS": true,
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/dist"
       },
       "environment": {
         "VCPKG_TARGET_TRIPLET": "x64-windows",
@@ -155,7 +156,8 @@
       "inherits": "vs2022",
       "binaryDir": "${sourceDir}/build/vs2022-shared",
       "cacheVariables": {
-        "BUILD_SHARED_LIBS": true
+        "BUILD_SHARED_LIBS": true,
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/dist-shared"
       }
     },
     {
