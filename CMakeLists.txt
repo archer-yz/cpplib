@@ -156,20 +156,26 @@ target_include_directories(cpplib
 install(TARGETS cpplib
     EXPORT cpplibTargets
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        COMPONENT Runtime
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        COMPONENT Development
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        COMPONENT Runtime
     PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/cpplib
+        COMPONENT Development
 )
 
 # Install headers
 install(DIRECTORY include/cpplib
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+    COMPONENT Development
     FILES_MATCHING PATTERN "*.h"
 )
 
 # Install the generated export header
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/include/cpplib/export.h
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/cpplib
+    COMPONENT Development
 )
 
 # Create and install package config files
@@ -189,6 +195,7 @@ install(FILES
     "${CMAKE_CURRENT_BINARY_DIR}/cpplibConfig.cmake"
     "${CMAKE_CURRENT_BINARY_DIR}/cpplibConfigVersion.cmake"
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/cpplib
+    COMPONENT Development
 )
 
 # Install export targets
@@ -196,6 +203,7 @@ install(EXPORT cpplibTargets
     FILE cpplibTargets.cmake
     NAMESPACE cpplib::
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/cpplib
+    COMPONENT Development
 )
 
 # Generate export file for build tree
@@ -216,3 +224,75 @@ message(STATUS "C++ standard: ${CMAKE_CXX_STANDARD}")
 message(STATUS "Install prefix: ${CMAKE_INSTALL_PREFIX}")
 message(STATUS "Examples: ${CPPLIB_BUILD_EXAMPLES}")
 message(STATUS "Tests: ${CPPLIB_BUILD_TESTS}")
+
+# CPack configuration
+set(CPACK_PACKAGE_NAME "cpplib")
+set(CPACK_PACKAGE_VENDOR "CPPLib Project")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Demo C++ library showcasing static/dynamic library development")
+set(CPACK_PACKAGE_VERSION ${PROJECT_VERSION})
+set(CPACK_PACKAGE_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
+set(CPACK_PACKAGE_VERSION_MINOR ${PROJECT_VERSION_MINOR})
+set(CPACK_PACKAGE_VERSION_PATCH ${PROJECT_VERSION_PATCH})
+set(CPACK_PACKAGE_INSTALL_DIRECTORY "cpplib")
+
+# Set package file name
+set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-${CMAKE_SYSTEM_NAME}")
+
+# License and README
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
+    set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
+endif()
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
+    set(CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
+endif()
+
+# Platform-specific configurations
+if(WIN32)
+    # Windows-specific settings - start with ZIP only
+    set(CPACK_GENERATOR "ZIP")
+
+    # Check if NSIS is available
+    find_program(NSIS_MAKENSIS makensis)
+    if(NSIS_MAKENSIS)
+        list(APPEND CPACK_GENERATOR "NSIS")
+        set(CPACK_NSIS_DISPLAY_NAME "CPPLib ${PROJECT_VERSION}")
+        set(CPACK_NSIS_PACKAGE_NAME "CPPLib")
+        set(CPACK_NSIS_CONTACT "cpplib@example.com")
+        set(CPACK_NSIS_HELP_LINK "https://github.com/example/cpplib")
+        set(CPACK_NSIS_URL_INFO_ABOUT "https://github.com/example/cpplib")
+        set(CPACK_NSIS_MODIFY_PATH ON)
+        message(STATUS "NSIS found: Will create installer package")
+    else()
+        message(STATUS "NSIS not found: Will create ZIP package only")
+    endif()
+elseif(APPLE)
+    # macOS-specific settings
+    set(CPACK_GENERATOR "TGZ;DragNDrop")
+    set(CPACK_DMG_VOLUME_NAME "CPPLib")
+    set(CPACK_DMG_FORMAT "UDZO")
+else()
+    # Linux-specific settings
+    set(CPACK_GENERATOR "TGZ;DEB;RPM")
+
+    # Debian package settings
+    set(CPACK_DEBIAN_PACKAGE_MAINTAINER "CPPLib Project <cpplib@example.com>")
+    set(CPACK_DEBIAN_PACKAGE_SECTION "devel")
+    set(CPACK_DEBIAN_PACKAGE_PRIORITY "optional")
+    set(CPACK_DEBIAN_PACKAGE_DEPENDS "libfmt-dev")
+
+    # RPM package settings
+    set(CPACK_RPM_PACKAGE_LICENSE "MIT")
+    set(CPACK_RPM_PACKAGE_GROUP "Development/Libraries")
+    set(CPACK_RPM_PACKAGE_REQUIRES "fmt-devel")
+endif()
+
+# Component-based packaging
+set(CPACK_COMPONENTS_ALL Runtime Development)
+set(CPACK_COMPONENT_RUNTIME_DISPLAY_NAME "Runtime Libraries")
+set(CPACK_COMPONENT_RUNTIME_DESCRIPTION "Runtime libraries and executables")
+set(CPACK_COMPONENT_DEVELOPMENT_DISPLAY_NAME "Development Files")
+set(CPACK_COMPONENT_DEVELOPMENT_DESCRIPTION "Header files and CMake configuration")
+set(CPACK_COMPONENT_DEVELOPMENT_DEPENDS Runtime)
+
+# Include CPack
+include(CPack)
